@@ -363,6 +363,15 @@ public class PdfViewer extends AppCompatActivity implements LoaderManager.Loader
                     }
 
                     @Override
+                    public void onSwipe(boolean value) {
+                        if (value) {
+                            onJumpToPageInDocument(mPage - 1);
+                        } else {
+                            onJumpToPageInDocument(mPage + 1);
+                        }
+                    }
+
+                    @Override
                     public void onZoomIn(float value) {
                         zoomIn(value, false);
                     }

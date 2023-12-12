@@ -14,6 +14,7 @@ import android.view.View;
 class GestureHelper {
     public interface GestureListener {
         boolean onTapUp();
+        void onSwipe(boolean value);
         // Can be replaced with ratio when supported
         void onZoomIn(float value);
         void onZoomOut(float value);
@@ -28,6 +29,18 @@ class GestureHelper {
                     @Override
                     public boolean onSingleTapUp(MotionEvent motionEvent) {
                         return listener.onTapUp();
+                    }
+
+                    @Override
+                    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+                        float distanceX = e2.getX() - e1.getX();
+                        float distanceY = e2.getY() - e1.getY();
+
+                        if (Math.abs(distanceX) > Math.abs(distanceY) && Math.abs(distanceX) > 100) {
+                            listener.onSwipe(distanceX > 0);
+                            return true;
+                        }
+                        return false;
                     }
                 });
 
